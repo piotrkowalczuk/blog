@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Piotr Kowalczuk Blog</title>
+    <link>http://piotrkowalczuk.github.io/tags/golang/</link>
+    <description>Recent content in Golang on Piotr Kowalczuk Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pl</language>
+    <copyright>Piotr Kowalczuk</copyright>
+    <lastBuildDate>Sun, 10 Jul 2016 20:12:00 +0200</lastBuildDate>
+    <atom:link href="http://piotrkowalczuk.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kolejka Priorytetowa</title>
+      <link>http://piotrkowalczuk.github.io/2016/07/10/kolejka-priorytetowa/</link>
+      <pubDate>Sun, 10 Jul 2016 20:12:00 +0200</pubDate>
+      
+      <guid>http://piotrkowalczuk.github.io/2016/07/10/kolejka-priorytetowa/</guid>
+      <description>
+
+&lt;h1 id=&#34;wstęp:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Wstęp&lt;/h1&gt;
+
+&lt;p&gt;Kolejka priorytetowa to abstrakcyjna struktura danych gdzie elementy są uszeregowane według danej wielkości.
+Kolejka ta nie jest kolejką typu FIFO czy też LIFO.
+Ponieważ jest to &lt;a href=&#34;https://pl.wikipedia.org/wiki/Abstrakcyjny_typ_danych&#34;&gt;ADT&lt;/a&gt; może być ona zaimplementowana na wielę sposobów:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kopiec binarny&lt;/li&gt;
+&lt;li&gt;Kopiec dwumianowy&lt;/li&gt;
+&lt;li&gt;Tablica&lt;/li&gt;
+&lt;li&gt;Lista&lt;/li&gt;
+&lt;li&gt;Rownoważone BST&lt;/li&gt;
+&lt;li&gt;Kopiec Fibonacciego&lt;/li&gt;
+&lt;li&gt;Kolejka Brodala&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;zagadnienie:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Zagadnienie&lt;/h1&gt;
+
+&lt;p&gt;Aby nadać problemowi bardziej intuicyjny charakter spróbujmy zastosować go w praktyce.
+Naszym zadaniem będzie utworzenie kolejki poleceń. Zadania mogą być dodawane w dowolnej kolejności.
+Każde polecenie powinno być opisane przez:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;id&lt;/code&gt; - identyfikator&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;index&lt;/code&gt; - miejsce w kolejce&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;name&lt;/code&gt; - nazwa&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timestamp&lt;/code&gt; - data do kiedy zadanie powinno zostać wykonane&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;epsilon&lt;/code&gt; - czas po wyznaczonej dacie wykonania po upłynięciu którego zadanie powinno zostać porzucone&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;command&lt;/code&gt; - komenda uruchamiająca skrypt/program&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;propozycja-rozwiązania:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Propozycja rozwiązania&lt;/h2&gt;
+
+&lt;p&gt;Jak wszyscy wiemy, biblioteka standardowa Go jest naprawdę bogata.
+Nie zabrakło także implementacji stosu (binarnego).
+Paczka &lt;a href=&#34;https://golang.org/pkg/container/heap/&#34;&gt;heap&lt;/a&gt;, bo o niej tutaj mowa dostarcza nam taki oto interface:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type Interface interface {
+	sort.Interface
+	Push(x interface{})
+	Pop() interface{}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Który jeżeli zaimplementowany poprawnie może być wykorzystany przy użyciu szeregu funkcji:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap/#Init&#34;&gt;heap.Init&lt;/a&gt; - inicjalizacja stosu, &lt;code&gt;O(n)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap/#Push&#34;&gt;heap.Push&lt;/a&gt; - dodanie elementu, &lt;code&gt;O(log(n))&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap/#Pop&#34;&gt;heap.Pop&lt;/a&gt; - usuniecie elementu minimalnego, &lt;code&gt;O(log(n))&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap/#Remove&#34;&gt;heap.Remove&lt;/a&gt; - usuniecie elementy pod podanym indexem, &lt;code&gt;O(log(n))&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap/#Fix&#34;&gt;heap.Fix&lt;/a&gt; - &amp;ldquo;naprawienie&amp;rdquo; stosu po np zmianie wartosci jednego z elementow, &lt;code&gt;O(log(n))&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;implementacja:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Implementacja&lt;/h2&gt;
+
+&lt;p&gt;Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
+Znaleźć w niej możemy paczkę &lt;a href=&#34;https://golang.org/pkg/os/exec/&#34;&gt;exec&lt;/a&gt; w której to znajduje się struktura &lt;a href=&#34;https://golang.org/pkg/os/exec/#Cmd&#34;&gt;exec.Cmd&lt;/a&gt;.
+Struktura reporezentująca pojedyńczą pracę do wykonania mogłaby wyglądać następująco:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type Job struct {
+	ID int64
+	Index int64
+	Name string
+	Timestamp time.Time
+	Epsilon time.Duration
+	Command *exec.Cmd
+}
+
+type Jobs []*Job
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Colekcja takich struktur musi implementować wcześniej wymieniony &lt;a href=&#34;https://golang.org/pkg/container/heap/#Interface&#34;&gt;Interface&lt;/a&gt;.
+A więc po kolei:&lt;/p&gt;
+
+&lt;h3 id=&#34;len:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Len&lt;/h3&gt;
+
+&lt;p&gt;Trywialna metoda, która jedynie sprawdza długość kolekcji.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Len implements sort Interface.
+func (j Jobs) Len() int {
+	return len(j)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;less:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Less&lt;/h3&gt;
+
+&lt;p&gt;Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
+ale w wypadku gdy są równe, porównuje także wartość &lt;code&gt;Epsilon&lt;/code&gt;.
+Implementacja ta to jedynie przykład.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Less implements sort Interface.
+func (j Jobs) Less(n, m int) bool {
+	if j[n].Timestamp.Equal(j[m].Timestamp) {
+		return j[n].Epsilon &amp;lt; j[m].Epsilon
+	}
+	return j[n].Timestamp.Before(j[m].Timestamp)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;swap:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Swap&lt;/h3&gt;
+
+&lt;p&gt;Nic innego jak zamiana elementów pod wskazanymi indeksami.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Swap implements sort Interface.
+func (j Jobs) Swap(n, m int) {
+	j[n], j[m] = j[m], j[n]
+	j[n].Index = int64(n)
+	j[m].Index = int64(m)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;push:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Push&lt;/h3&gt;
+
+&lt;p&gt;Przez push rozumiemy dodanie na koniec kolekcji nowego elementu i ustawienie jego indeksu na &lt;code&gt;n&lt;/code&gt;.
+Funkcja &lt;a href=&#34;https://golang.org/pkg/container/heap/#Push&#34;&gt;heap.Push&lt;/a&gt; użyje tej metody na początku, a następnie będzie przesuwać element do góry tak długo jak to tylko możliwe, aż osiągnie właściwy dla siebie index wynikający z warunku zawartego w metodzie &lt;code&gt;Less&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Push implements heap Interface.
+func (j *Jobs) Push(x interface{}) {
+	n := len(*j)
+	item := x.(*Job)
+	item.Index = int64(n)
+	*j = append(*j, item)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;pop:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Pop&lt;/h3&gt;
+
+&lt;p&gt;Usuniecie zadania z kolejki odbywa się przez utworzenie nowego &lt;a href=&#34;https://blog.golang.org/go-slices-usage-and-internals&#34;&gt;slice&amp;rsquo;a&lt;/a&gt; z pominięciem ostatniego elementu.
+Dla jasności ustawiamy także &lt;code&gt;Index&lt;/code&gt; usuniętego elementu na &lt;code&gt;-1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Pop implements heap Interface.
+func (j *Jobs) Pop() interface{} {
+	old := *j
+	n := len(old)
+	item := old[n-1]
+	item.Index = -1
+	*j = old[0 : n-1]
+	return item
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;efekt-końcowy:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Efekt końcowy&lt;/h3&gt;
+
+&lt;p&gt;Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej. &lt;a href=&#34;https://blog.golang.org/examples&#34;&gt;Testowy przykład&lt;/a&gt; to potwierdza.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func ExampleJobs() {
+	jobs := make(Jobs, 0, 3)
+	zero := time.Now()
+	heap.Init(&amp;amp;jobs)
+	heap.Push(&amp;amp;jobs, &amp;amp;Job{
+		ID:        1,
+		Name:      &amp;quot;first&amp;quot;,
+		Timestamp: zero.Add(10 * time.Hour),
+		Epsilon:   5 * time.Minute,
+		Command:   exec.Command(&amp;quot;ls&amp;quot;, &amp;quot;-lha&amp;quot;),
+	})
+	heap.Push(&amp;amp;jobs, &amp;amp;Job{
+		ID:        1,
+		Name:      &amp;quot;second&amp;quot;,
+		Timestamp: zero.Add(10 * time.Hour),
+		Epsilon:   4 * time.Minute,
+		Command:   exec.Command(&amp;quot;pwd&amp;quot;),
+	})
+	heap.Push(&amp;amp;jobs, &amp;amp;Job{
+		ID:        1,
+		Name:      &amp;quot;third&amp;quot;,
+		Timestamp: zero.Add(5 * time.Hour),
+		Epsilon:   4 * time.Minute,
+		Command:   exec.Command(&amp;quot;ps&amp;quot;, &amp;quot;aux&amp;quot;),
+	})
+	fmt.Println(jobs.Len())
+
+	j1 := heap.Pop(&amp;amp;jobs).(*Job)
+	j2 := heap.Pop(&amp;amp;jobs).(*Job)
+	j3 := heap.Pop(&amp;amp;jobs).(*Job)
+
+	fmt.Println(j1.Name)
+	fmt.Println(j2.Name)
+	fmt.Println(j3.Name)
+	fmt.Println(jobs.Len())
+
+	// Output:
+	// 3
+	// third
+	// second
+	// first
+	// 0
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;wnioski:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Wnioski&lt;/h1&gt;
+
+&lt;p&gt;Kolejka priorytetowa to bardzo ważna struktura danych szczególnie w przypadku wszelkiego rodzaju aplikacji serwerowych.
+Przed przystąpieniem do rozwiazania problemu warto przyjrzeć się &lt;a href=&#34;https://golang.org/pkg/&#34;&gt;bibliotece standardowej&lt;/a&gt;,
+może zawierać ona przydatne interfacy/implementacje czy także &lt;a href=&#34;https://golang.org/pkg/container/heap/#example__priorityQueue&#34;&gt;przykłady&lt;/a&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/heap&#34;&gt;container/heap&lt;/a&gt; - implementacja stosu&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/list&#34;&gt;container/list&lt;/a&gt; - implementacja podwujnie łączonej listy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://golang.org/pkg/container/ring&#34;&gt;container/ring&lt;/a&gt; - operacje na listach cyklicznych&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

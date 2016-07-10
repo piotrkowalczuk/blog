@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Kolejka Priorytetowa &middot; Piotr Kowalczuk</title>
+        <meta name="description" content="Implementacja kolejki priorytetowej przy pomocy bibliteki standardowej na przykładzie kolejki poleceń">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.16-DEV" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://piotrkowalczuk.github.iocss/normalize.css">
+        <link rel="stylesheet" href="http://piotrkowalczuk.github.iocss/highlight.css">
+        <link rel="stylesheet" href="http://piotrkowalczuk.github.iocss/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/tomorrow.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/languages/go.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-50599199-4', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="Piotr Kowalczuk Blog" href="http://piotrkowalczuk.github.io">Piotr Kowalczuk Blog</a>
+                            </h1>
+                        
+                        <a class="button-square" href="http://piotrkowalczuk.github.ioindex.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/piotrkowalczuk">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Stack Overflow" title="Stack Overflow" href="http://stackoverflow.com/users/XXX/YYY">
+                                <i class="fa fa-stack-overflow"></i>
+                            </a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="LinkedIn" title="LinkedIn" href="https://linkedin.com/in/piotr-kowalczuk-8a870480/">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="http://piotrkowalczuk.github.io/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Contact" href="http://piotrkowalczuk.github.io/page/contact/">Contact</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="http://piotrkowalczuk.github.io/page/about/">About</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Kolejka Priorytetowa</h1>
+    
+        <p class="post-description" itemprop="description">Implementacja kolejki priorytetowej przy pomocy bibliteki standardowej na przykładzie kolejki poleceń</p>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2016-07-10" itemprop="datePublished">Sun, Jul 10, 2016</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="http://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://piotrkowalczuk.github.io" itemprop="url" rel="author">Piotr Kowalczuk</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+<h1 id="wstęp:042cb00d946fbfbaf0b1b50f0ee94629">Wstęp</h1>
+
+<p>Kolejka priorytetowa to abstrakcyjna struktura danych gdzie elementy są uszeregowane według danej wielkości.
+Kolejka ta nie jest kolejką typu FIFO czy też LIFO.
+Ponieważ jest to <a href="https://pl.wikipedia.org/wiki/Abstrakcyjny_typ_danych">ADT</a> może być ona zaimplementowana na wielę sposobów:</p>
+
+<ul>
+<li>Kopiec binarny</li>
+<li>Kopiec dwumianowy</li>
+<li>Tablica</li>
+<li>Lista</li>
+<li>Rownoważone BST</li>
+<li>Kopiec Fibonacciego</li>
+<li>Kolejka Brodala</li>
+</ul>
+
+<h1 id="zagadnienie:042cb00d946fbfbaf0b1b50f0ee94629">Zagadnienie</h1>
+
+<p>Aby nadać problemowi bardziej intuicyjny charakter spróbujmy zastosować go w praktyce.
+Naszym zadaniem będzie utworzenie kolejki poleceń. Zadania mogą być dodawane w dowolnej kolejności.
+Każde polecenie powinno być opisane przez:</p>
+
+<ul>
+<li><code>id</code> - identyfikator</li>
+<li><code>index</code> - miejsce w kolejce</li>
+<li><code>name</code> - nazwa</li>
+<li><code>timestamp</code> - data do kiedy zadanie powinno zostać wykonane</li>
+<li><code>epsilon</code> - czas po wyznaczonej dacie wykonania po upłynięciu którego zadanie powinno zostać porzucone</li>
+<li><code>command</code> - komenda uruchamiająca skrypt/program</li>
+</ul>
+
+<h2 id="propozycja-rozwiązania:042cb00d946fbfbaf0b1b50f0ee94629">Propozycja rozwiązania</h2>
+
+<p>Jak wszyscy wiemy, biblioteka standardowa Go jest naprawdę bogata.
+Nie zabrakło także implementacji stosu (binarnego).
+Paczka <a href="https://golang.org/pkg/container/heap/">heap</a>, bo o niej tutaj mowa dostarcza nam taki oto interface:</p>
+
+<pre><code class="language-go">type Interface interface {
+	sort.Interface
+	Push(x interface{})
+	Pop() interface{}
+}
+</code></pre>
+
+<p>Który jeżeli zaimplementowany poprawnie może być wykorzystany przy użyciu szeregu funkcji:</p>
+
+<ul>
+<li><a href="https://golang.org/pkg/container/heap/#Init">heap.Init</a> - inicjalizacja stosu, <code>O(n)</code></li>
+<li><a href="https://golang.org/pkg/container/heap/#Push">heap.Push</a> - dodanie elementu, <code>O(log(n))</code></li>
+<li><a href="https://golang.org/pkg/container/heap/#Pop">heap.Pop</a> - usuniecie elementu minimalnego, <code>O(log(n))</code></li>
+<li><a href="https://golang.org/pkg/container/heap/#Remove">heap.Remove</a> - usuniecie elementy pod podanym indexem, <code>O(log(n))</code></li>
+<li><a href="https://golang.org/pkg/container/heap/#Fix">heap.Fix</a> - &ldquo;naprawienie&rdquo; stosu po np zmianie wartosci jednego z elementow, <code>O(log(n))</code></li>
+</ul>
+
+<h2 id="implementacja:042cb00d946fbfbaf0b1b50f0ee94629">Implementacja</h2>
+
+<p>Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
+Znaleźć w niej możemy paczkę <a href="https://golang.org/pkg/os/exec/">exec</a> w której to znajduje się struktura <a href="https://golang.org/pkg/os/exec/#Cmd">exec.Cmd</a>.
+Struktura reporezentująca pojedyńczą pracę do wykonania mogłaby wyglądać następująco:</p>
+
+<pre><code class="language-go">type Job struct {
+	ID int64
+	Index int64
+	Name string
+	Timestamp time.Time
+	Epsilon time.Duration
+	Command *exec.Cmd
+}
+
+type Jobs []*Job
+</code></pre>
+
+<p>Colekcja takich struktur musi implementować wcześniej wymieniony <a href="https://golang.org/pkg/container/heap/#Interface">Interface</a>.
+A więc po kolei:</p>
+
+<h3 id="len:042cb00d946fbfbaf0b1b50f0ee94629">Len</h3>
+
+<p>Trywialna metoda, która jedynie sprawdza długość kolekcji.</p>
+
+<pre><code class="language-go">// Len implements sort Interface.
+func (j Jobs) Len() int {
+	return len(j)
+}
+</code></pre>
+
+<h3 id="less:042cb00d946fbfbaf0b1b50f0ee94629">Less</h3>
+
+<p>Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
+ale w wypadku gdy są równe, porównuje także wartość <code>Epsilon</code>.
+Implementacja ta to jedynie przykład.</p>
+
+<pre><code class="language-go">// Less implements sort Interface.
+func (j Jobs) Less(n, m int) bool {
+	if j[n].Timestamp.Equal(j[m].Timestamp) {
+		return j[n].Epsilon &lt; j[m].Epsilon
+	}
+	return j[n].Timestamp.Before(j[m].Timestamp)
+}
+</code></pre>
+
+<h3 id="swap:042cb00d946fbfbaf0b1b50f0ee94629">Swap</h3>
+
+<p>Nic innego jak zamiana elementów pod wskazanymi indeksami.</p>
+
+<pre><code class="language-go">// Swap implements sort Interface.
+func (j Jobs) Swap(n, m int) {
+	j[n], j[m] = j[m], j[n]
+	j[n].Index = int64(n)
+	j[m].Index = int64(m)
+}
+</code></pre>
+
+<h3 id="push:042cb00d946fbfbaf0b1b50f0ee94629">Push</h3>
+
+<p>Przez push rozumiemy dodanie na koniec kolekcji nowego elementu i ustawienie jego indeksu na <code>n</code>.
+Funkcja <a href="https://golang.org/pkg/container/heap/#Push">heap.Push</a> użyje tej metody na początku, a następnie będzie przesuwać element do góry tak długo jak to tylko możliwe, aż osiągnie właściwy dla siebie index wynikający z warunku zawartego w metodzie <code>Less</code>.</p>
+
+<pre><code class="language-go">// Push implements heap Interface.
+func (j *Jobs) Push(x interface{}) {
+	n := len(*j)
+	item := x.(*Job)
+	item.Index = int64(n)
+	*j = append(*j, item)
+}
+</code></pre>
+
+<h3 id="pop:042cb00d946fbfbaf0b1b50f0ee94629">Pop</h3>
+
+<p>Usuniecie zadania z kolejki odbywa się przez utworzenie nowego <a href="https://blog.golang.org/go-slices-usage-and-internals">slice&rsquo;a</a> z pominięciem ostatniego elementu.
+Dla jasności ustawiamy także <code>Index</code> usuniętego elementu na <code>-1</code>.</p>
+
+<pre><code class="language-go">// Pop implements heap Interface.
+func (j *Jobs) Pop() interface{} {
+	old := *j
+	n := len(old)
+	item := old[n-1]
+	item.Index = -1
+	*j = old[0 : n-1]
+	return item
+}
+</code></pre>
+
+<h3 id="efekt-końcowy:042cb00d946fbfbaf0b1b50f0ee94629">Efekt końcowy</h3>
+
+<p>Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej. <a href="https://blog.golang.org/examples">Testowy przykład</a> to potwierdza.</p>
+
+<pre><code class="language-go">func ExampleJobs() {
+	jobs := make(Jobs, 0, 3)
+	zero := time.Now()
+	heap.Init(&amp;jobs)
+	heap.Push(&amp;jobs, &amp;Job{
+		ID:        1,
+		Name:      &quot;first&quot;,
+		Timestamp: zero.Add(10 * time.Hour),
+		Epsilon:   5 * time.Minute,
+		Command:   exec.Command(&quot;ls&quot;, &quot;-lha&quot;),
+	})
+	heap.Push(&amp;jobs, &amp;Job{
+		ID:        1,
+		Name:      &quot;second&quot;,
+		Timestamp: zero.Add(10 * time.Hour),
+		Epsilon:   4 * time.Minute,
+		Command:   exec.Command(&quot;pwd&quot;),
+	})
+	heap.Push(&amp;jobs, &amp;Job{
+		ID:        1,
+		Name:      &quot;third&quot;,
+		Timestamp: zero.Add(5 * time.Hour),
+		Epsilon:   4 * time.Minute,
+		Command:   exec.Command(&quot;ps&quot;, &quot;aux&quot;),
+	})
+	fmt.Println(jobs.Len())
+
+	j1 := heap.Pop(&amp;jobs).(*Job)
+	j2 := heap.Pop(&amp;jobs).(*Job)
+	j3 := heap.Pop(&amp;jobs).(*Job)
+
+	fmt.Println(j1.Name)
+	fmt.Println(j2.Name)
+	fmt.Println(j3.Name)
+	fmt.Println(jobs.Len())
+
+	// Output:
+	// 3
+	// third
+	// second
+	// first
+	// 0
+}
+</code></pre>
+
+<h1 id="wnioski:042cb00d946fbfbaf0b1b50f0ee94629">Wnioski</h1>
+
+<p>Kolejka priorytetowa to bardzo ważna struktura danych szczególnie w przypadku wszelkiego rodzaju aplikacji serwerowych.
+Przed przystąpieniem do rozwiazania problemu warto przyjrzeć się <a href="https://golang.org/pkg/">bibliotece standardowej</a>,
+może zawierać ona przydatne interfacy/implementacje czy także <a href="https://golang.org/pkg/container/heap/#example__priorityQueue">przykłady</a>:</p>
+
+<ul>
+<li><a href="https://golang.org/pkg/container/heap">container/heap</a> - implementacja stosu</li>
+<li><a href="https://golang.org/pkg/container/list">container/list</a> - implementacja podwujnie łączonej listy</li>
+<li><a href="https://golang.org/pkg/container/ring">container/ring</a> - operacje na listach cyklicznych</li>
+</ul>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+                 <a href="http://piotrkowalczuk.github.io/tags/struktury-danych/">struktury danych</a>
+            
+                 <a href="http://piotrkowalczuk.github.io/tags/golang/">golang</a>
+            
+                 <a href="http://piotrkowalczuk.github.io/tags/biblioteka-standardowa/">biblioteka standardowa</a>
+            
+        </p>
+    
+
+    <div class="share">
+        <a class="icon-twitter" href="http://twitter.com/share?text=Kolejka%20Priorytetowa&url=http%3a%2f%2fpiotrkowalczuk.github.io%2f2016%2f07%2f10%2fkolejka-priorytetowa%2f"
+            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+            <i class="fa fa-twitter"></i>
+            <span class="hidden">Twitter</span>
+        </a>
+
+        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fpiotrkowalczuk.github.io%2f2016%2f07%2f10%2fkolejka-priorytetowa%2f"
+            onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+            <i class="fa fa-facebook"></i>
+            <span class="hidden">Facebook</span>
+        </a>
+
+        <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2fpiotrkowalczuk.github.io%2f2016%2f07%2f10%2fkolejka-priorytetowa%2f"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+           <i class="fa fa-google-plus"></i>
+            <span class="hidden">Google+</span>
+        </a>
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Piotr Kowalczuk Blog" href="http://piotrkowalczuk.github.io">Piotr Kowalczuk Blog</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2016 / Powered by <a href="http://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="http://piotrkowalczuk.github.iojs/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+        <script src="http://piotrkowalczuk.github.iojs/jquery.fitvids.js"></script>
+        <script src="http://piotrkowalczuk.github.iojs/scripts.js"></script>
+    </body>
+</html>
+
