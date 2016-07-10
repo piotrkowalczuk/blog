@@ -1,4 +1,4 @@
-baseurl = "http://piotrkowalczuk.github.io"
+baseurl = "http://piotrkowalczuk.github.io/"
 title = "Piotr Kowalczuk Blog"
 theme = "ghostwriter"
 languageCode = "pl"
