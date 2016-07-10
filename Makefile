@@ -6,4 +6,4 @@ deploy:
 	cp -r public/ ../piotrkowalczuk.github.io/
 	git add -A
 	git commit -m "blog deployment"
-	
+	git push
