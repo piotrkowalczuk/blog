@@ -1,1 +1,0 @@
-# piotrkowalczuk.github.io
