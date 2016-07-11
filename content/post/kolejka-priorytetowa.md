@@ -35,7 +35,7 @@ Każde polecenie powinno być opisane przez:
 
 ## Propozycja rozwiązania
 
-Jak wszyscy wiemy, biblioteka standardowa Go jest naprawdę bogata.
+Biblioteka standardowa Go jest naprawdę bogata.
 Nie zabrakło także implementacji stosu (binarnego).
 Paczka [heap](https://golang.org/pkg/container/heap/), bo o niej tutaj mowa dostarcza nam taki oto interface:
 
@@ -59,7 +59,7 @@ Który jeżeli zaimplementowany poprawnie może być wykorzystany przy użyciu s
 
 Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
 Znaleźć w niej możemy paczkę [exec](https://golang.org/pkg/os/exec/) w której to znajduje się struktura [exec.Cmd](https://golang.org/pkg/os/exec/#Cmd).
-Struktura reporezentująca pojedyńczą pracę do wykonania mogłaby wyglądać następująco:
+Struktura reporezentująca pojedyńcze polecenie do wykonania mogłaby wyglądać następująco:
 
 ```go
 type Job struct {
@@ -79,7 +79,7 @@ A więc po kolei:
 
 ### Len
 
-Trywialna metoda, która jedynie sprawdza długość kolekcji.
+`Len` jedynie sprawdza długość kolekcji.
 
 ```go
 // Len implements sort Interface.
@@ -92,7 +92,7 @@ func (j Jobs) Len() int {
 
 Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
 ale w wypadku gdy są równe, porównuje także wartość `Epsilon`.
-Implementacja ta to jedynie przykład.
+Jest to jedynie przykładowa implementacja.
 
 
 ```go
@@ -151,7 +151,8 @@ func (j *Jobs) Pop() interface{} {
 
 ### Efekt końcowy
 
-Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej. [Testowy przykład](https://blog.golang.org/examples) to potwierdza.
+Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej.
+[Testowy przykład](https://blog.golang.org/examples) to potwierdza.
 ```go
 func ExampleJobs() {
 	jobs := make(Jobs, 0, 3)

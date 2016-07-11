@@ -51,7 +51,7 @@ Każde polecenie powinno być opisane przez:&lt;/p&gt;
 
 &lt;h2 id=&#34;propozycja-rozwiązania:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Propozycja rozwiązania&lt;/h2&gt;
 
-&lt;p&gt;Jak wszyscy wiemy, biblioteka standardowa Go jest naprawdę bogata.
+&lt;p&gt;Biblioteka standardowa Go jest naprawdę bogata.
 Nie zabrakło także implementacji stosu (binarnego).
 Paczka &lt;a href=&#34;https://golang.org/pkg/container/heap/&#34;&gt;heap&lt;/a&gt;, bo o niej tutaj mowa dostarcza nam taki oto interface:&lt;/p&gt;
 
@@ -76,7 +76,7 @@ Paczka &lt;a href=&#34;https://golang.org/pkg/container/heap/&#34;&gt;heap&lt;/a
 
 &lt;p&gt;Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
 Znaleźć w niej możemy paczkę &lt;a href=&#34;https://golang.org/pkg/os/exec/&#34;&gt;exec&lt;/a&gt; w której to znajduje się struktura &lt;a href=&#34;https://golang.org/pkg/os/exec/#Cmd&#34;&gt;exec.Cmd&lt;/a&gt;.
-Struktura reporezentująca pojedyńczą pracę do wykonania mogłaby wyglądać następująco:&lt;/p&gt;
+Struktura reporezentująca pojedyńcze polecenie do wykonania mogłaby wyglądać następująco:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;type Job struct {
 	ID int64
@@ -95,7 +95,7 @@ A więc po kolei:&lt;/p&gt;
 
 &lt;h3 id=&#34;len:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Len&lt;/h3&gt;
 
-&lt;p&gt;Trywialna metoda, która jedynie sprawdza długość kolekcji.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Len&lt;/code&gt; jedynie sprawdza długość kolekcji.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Len implements sort Interface.
 func (j Jobs) Len() int {
@@ -107,7 +107,7 @@ func (j Jobs) Len() int {
 
 &lt;p&gt;Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
 ale w wypadku gdy są równe, porównuje także wartość &lt;code&gt;Epsilon&lt;/code&gt;.
-Implementacja ta to jedynie przykład.&lt;/p&gt;
+Jest to jedynie przykładowa implementacja.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;// Less implements sort Interface.
 func (j Jobs) Less(n, m int) bool {
@@ -162,7 +162,8 @@ func (j *Jobs) Pop() interface{} {
 
 &lt;h3 id=&#34;efekt-końcowy:042cb00d946fbfbaf0b1b50f0ee94629&#34;&gt;Efekt końcowy&lt;/h3&gt;
 
-&lt;p&gt;Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej. &lt;a href=&#34;https://blog.golang.org/examples&#34;&gt;Testowy przykład&lt;/a&gt; to potwierdza.&lt;/p&gt;
+&lt;p&gt;Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej.
+&lt;a href=&#34;https://blog.golang.org/examples&#34;&gt;Testowy przykład&lt;/a&gt; to potwierdza.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func ExampleJobs() {
 	jobs := make(Jobs, 0, 3)

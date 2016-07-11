@@ -142,7 +142,7 @@ Każde polecenie powinno być opisane przez:</p>
 
 <h2 id="propozycja-rozwiązania:042cb00d946fbfbaf0b1b50f0ee94629">Propozycja rozwiązania</h2>
 
-<p>Jak wszyscy wiemy, biblioteka standardowa Go jest naprawdę bogata.
+<p>Biblioteka standardowa Go jest naprawdę bogata.
 Nie zabrakło także implementacji stosu (binarnego).
 Paczka <a href="https://golang.org/pkg/container/heap/">heap</a>, bo o niej tutaj mowa dostarcza nam taki oto interface:</p>
 
@@ -167,7 +167,7 @@ Paczka <a href="https://golang.org/pkg/container/heap/">heap</a>, bo o niej tuta
 
 <p>Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
 Znaleźć w niej możemy paczkę <a href="https://golang.org/pkg/os/exec/">exec</a> w której to znajduje się struktura <a href="https://golang.org/pkg/os/exec/#Cmd">exec.Cmd</a>.
-Struktura reporezentująca pojedyńczą pracę do wykonania mogłaby wyglądać następująco:</p>
+Struktura reporezentująca pojedyńcze polecenie do wykonania mogłaby wyglądać następująco:</p>
 
 <pre><code class="language-go">type Job struct {
 	ID int64
@@ -186,7 +186,7 @@ A więc po kolei:</p>
 
 <h3 id="len:042cb00d946fbfbaf0b1b50f0ee94629">Len</h3>
 
-<p>Trywialna metoda, która jedynie sprawdza długość kolekcji.</p>
+<p><code>Len</code> jedynie sprawdza długość kolekcji.</p>
 
 <pre><code class="language-go">// Len implements sort Interface.
 func (j Jobs) Len() int {
@@ -198,7 +198,7 @@ func (j Jobs) Len() int {
 
 <p>Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
 ale w wypadku gdy są równe, porównuje także wartość <code>Epsilon</code>.
-Implementacja ta to jedynie przykład.</p>
+Jest to jedynie przykładowa implementacja.</p>
 
 <pre><code class="language-go">// Less implements sort Interface.
 func (j Jobs) Less(n, m int) bool {
@@ -253,7 +253,8 @@ func (j *Jobs) Pop() interface{} {
 
 <h3 id="efekt-końcowy:042cb00d946fbfbaf0b1b50f0ee94629">Efekt końcowy</h3>
 
-<p>Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej. <a href="https://blog.golang.org/examples">Testowy przykład</a> to potwierdza.</p>
+<p>Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej.
+<a href="https://blog.golang.org/examples">Testowy przykład</a> to potwierdza.</p>
 
 <pre><code class="language-go">func ExampleJobs() {
 	jobs := make(Jobs, 0, 3)
