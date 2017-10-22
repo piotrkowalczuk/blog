@@ -12,7 +12,7 @@ Pierwsza stabilna wersja języka została wydana w marcu 2012 roku.
 Od tamtego czasu mineło już ponad 5 lat.
 
 W tym czasie w rankingu [TIOBE](https://www.tiobe.com/tiobe-index/) język Go zanotował wzrost z 0.086% do 1.357% i plasuje się na pozycji 20.
-Mogłoby się to wydawać niewiele, ale jak porównamy to do Javascript'u posiadającego obecnie 3% udziału w rynku i będącego na pozycji 6, perspektywa się troche zmienia.
+Mogłoby się to wydawać niewiele, ale jak porównamy to do Javascript'u posiadającego obecnie 3% udziału w rynku i będącego na pozycji 6, perspektywa trochę się zmienia.
 
 Język zajmuję też 9 miejsce pod względem ilości otwartych pull requestów na [githubie](https://octoverse.github.com), posiadając 285 tysięcy kontrybucji.
 Dla porównania - Java, znajdująca się na miejscu drugim, posiada ich 986 tysięcy.
@@ -63,7 +63,7 @@ Potencjalny kandydat musi rozumieć kiedy stosować kanały, [mutex](https://pl.
 * [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
   
 ## Przerwania
-We wszelkiego rodzaju aplikacjach webowych czy też systemach rozproszonych możliwość przerwania przetwarzania żądania jest na wagę złota. Taki mechanizm pozwala kontrolować zużycie zasobów (ich zwalnianie) oraz przestrzec się przed katastrofalnym w skutkach efektem domina.
+We wszelkiego rodzaju aplikacjach webowych czy też systemach rozproszonych, możliwość przerwania przetwarzania żądania jest na wagę złota. Taki mechanizm pozwala kontrolować zużycie zasobów (ich zwalnianie) oraz przestrzec się przed katastrofalnym w skutkach efektem domina.
 
 Znajomość paczki [context](https://golang.org/pkg/context) jest tutaj kluczowa. 
 Za jej pomocą jesteśmy w stanie anulować żądania oraz procesy, a także określać górną granice czasu, w którym nasza logika ma zostać wykonana. 

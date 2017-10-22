@@ -6,5 +6,5 @@ deploy:
 	@cp -r public/ ../piotrkowalczuk.github.io/
 	@cp -r examples/ ../piotrkowalczuk.github.io/examples
 	@git ${GIT_OPTS} add -A
-	@git ${GIT_OPTS} commit -m "blog deployment"
+	@git ${GIT_OPTS} commit -m "$(message)"
 	@git ${GIT_OPTS} push
