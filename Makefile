@@ -1,10 +1,10 @@
 
+GIT_OPTS=--git-dir=../piotrkowalczuk.github.io/.git/ --work-tree=../piotrkowalczuk.github.io/
+
 deploy:
-	@export GIT_WORK_TREE=../piotrkowalczuk.github.io/
-	@export GIT_DIR=../piotrkowalczuk.github.io/.git/
 	@hugo
 	@cp -r public/ ../piotrkowalczuk.github.io/
 	@cp -r examples/ ../piotrkowalczuk.github.io/examples
-	@git add -A
-	@git commit -m "blog deployment"
-	@git push
+	@git ${GIT_OPTS} add -A
+	@git ${GIT_OPTS} commit -m "blog deployment"
+	@git ${GIT_OPTS} push

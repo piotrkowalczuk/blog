@@ -74,12 +74,12 @@ type Job struct {
 type Jobs []*Job
 ```
 
-Colekcja takich struktur musi implementować wcześniej wymieniony [Interface](https://golang.org/pkg/container/heap/#Interface).
+Kolekcja takich struktur musi implementować wcześniej wymieniony [Interface](https://golang.org/pkg/container/heap/#Interface).
 A więc po kolei:
 
 ### Len
 
-`Len` jedynie sprawdza długość kolekcji.
+Jak sama nazwa wskazuje sprawdza długość kolekcji.
 
 ```go
 // Len implements sort Interface.

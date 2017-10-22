@@ -10,6 +10,8 @@ layoutdir = "layouts"
 publishdir = "public"
 canonifyurls = true
 
+disqusShortname = "piotrkowalczuk"
+
 [Author]
     name = "Piotr Kowalczuk"
     profile = "https://piotrkowalczuk.github.io"
@@ -23,7 +25,6 @@ canonifyurls = true
     description = "Golang Development"
     github = "https://github.com/piotrkowalczuk"
     linkedin = "https://linkedin.com/in/piotr-kowalczuk-8a870480/"
-    stackoverflow = "http://stackoverflow.com/users/XXX/YYY"
 
 [Permalinks]
     post = "/:year/:month/:day/:filename/"
@@ -32,13 +33,3 @@ canonifyurls = true
     name = "Blog"
     url = "/"
     weight = 1
-
-[[menu.main]]
-    name = "Contact"
-    url = "/page/contact/"
-    weight = 2
-
-[[menu.main]]
-    name = "About"
-    url = "/page/about/"
-    weight = 3
