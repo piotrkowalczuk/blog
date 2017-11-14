@@ -1,4 +1,4 @@
-baseurl = "http://piotrkowalczuk.github.io/"
+baseurl = "https://piotrkowalczuk.github.io/"
 title = "Piotr Kowalczuk Blog"
 theme = "ghostwriter"
 languageCode = "pl"
@@ -25,6 +25,10 @@ disqusShortname = "piotrkowalczuk"
     description = "Golang Development"
     github = "https://github.com/piotrkowalczuk"
     linkedin = "https://linkedin.com/in/piotr-kowalczuk-8a870480/"
+    stackoverflow = "https://stackoverflow.com/users/1315205/piotr-kowalczuk"
+    opengraph = true
+    shareTwitter = true
+    shareLinkedIn = true
 
 [Permalinks]
     post = "/:year/:month/:day/:filename/"
