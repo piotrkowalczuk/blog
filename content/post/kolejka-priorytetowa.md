@@ -6,7 +6,7 @@ title = "Kolejka Priorytetowa"
 description = "Implementacja kolejki priorytetowej przy pomocy bibliteki standardowej na przykładzie kolejki poleceń"
 +++
 
-# Wstęp
+## Wstęp
 
 Kolejka priorytetowa to abstrakcyjna struktura danych gdzie elementy są uszeregowane według danej wielkości.
 Kolejka ta nie jest kolejką typu FIFO czy też LIFO.
@@ -20,7 +20,7 @@ Ponieważ jest to [ADT](https://pl.wikipedia.org/wiki/Abstrakcyjny_typ_danych) m
 * Kopiec Fibonacciego
 * Kolejka Brodala
 
-# Zagadnienie
+## Zagadnienie
 
 Aby nadać problemowi bardziej intuicyjny charakter spróbujmy zastosować go w praktyce.
 Naszym zadaniem będzie utworzenie kolejki poleceń. Zadania mogą być dodawane w dowolnej kolejności.
@@ -33,7 +33,7 @@ Każde polecenie powinno być opisane przez:
 * `epsilon` - czas po wyznaczonej dacie wykonania po upłynięciu którego zadanie powinno zostać porzucone
 * `command` - komenda uruchamiająca skrypt/program
 
-## Propozycja rozwiązania
+### Propozycja rozwiązania
 
 Biblioteka standardowa Go jest naprawdę bogata.
 Nie zabrakło także implementacji stosu (binarnego).
@@ -55,7 +55,7 @@ Który jeżeli zaimplementowany poprawnie może być wykorzystany przy użyciu s
 * [heap.Remove](https://golang.org/pkg/container/heap/#Remove) - usuniecie elementy pod podanym indexem, `O(log(n))`
 * [heap.Fix](https://golang.org/pkg/container/heap/#Fix) - "naprawienie" stosu po np zmianie wartosci jednego z elementow, `O(log(n))`
 
-## Implementacja
+### Implementacja
 
 Raz jeszcze skorzystamy z dobrodziejstw biblioteki standardowej.
 Znaleźć w niej możemy paczkę [exec](https://golang.org/pkg/os/exec/) w której to znajduje się struktura [exec.Cmd](https://golang.org/pkg/os/exec/#Cmd).
@@ -77,7 +77,7 @@ type Jobs []*Job
 Kolekcja takich struktur musi implementować wcześniej wymieniony [Interface](https://golang.org/pkg/container/heap/#Interface).
 A więc po kolei:
 
-### Len
+#### Len
 
 Jak sama nazwa wskazuje sprawdza długość kolekcji.
 
@@ -88,7 +88,7 @@ func (j Jobs) Len() int {
 }
 ```
 
-### Less
+#### Less
 
 Metoda ta nie tylko sprawdza który deadline nastąpi jako pierwszy,
 ale w wypadku gdy są równe, porównuje także wartość `Epsilon`.
@@ -105,7 +105,7 @@ func (j Jobs) Less(n, m int) bool {
 }
 ```
 
-### Swap
+#### Swap
 
 Nic innego jak zamiana elementów pod wskazanymi indeksami.
 
@@ -119,7 +119,7 @@ func (j Jobs) Swap(n, m int) {
 ```
 
 
-### Push
+#### Push
 Przez push rozumiemy dodanie na koniec kolekcji nowego elementu i ustawienie jego indeksu na `n`.
 Funkcja [heap.Push](https://golang.org/pkg/container/heap/#Push) użyje tej metody na początku, a następnie będzie przesuwać element do góry tak długo jak to tylko możliwe, aż osiągnie właściwy dla siebie index wynikający z warunku zawartego w metodzie `Less`.
 ```go
@@ -132,7 +132,7 @@ func (j *Jobs) Push(x interface{}) {
 }
 ```
 
-### Pop
+#### Pop
 
 Usuniecie zadania z kolejki odbywa się przez utworzenie nowego [slice'a](https://blog.golang.org/go-slices-usage-and-internals) z pominięciem ostatniego elementu.
 Dla jasności ustawiamy także `Index` usuniętego elementu na `-1`.
@@ -149,7 +149,7 @@ func (j *Jobs) Pop() interface{} {
 }
 ```
 
-### Efekt końcowy
+#### Efekt końcowy
 
 Całość działa tak jak przewiduje to koncepcja kolejki priorytetowej.
 [Testowy przykład](https://blog.golang.org/examples) to potwierdza.
@@ -199,7 +199,7 @@ func ExampleJobs() {
 }
 ```
 
-# Wnioski
+## Wnioski
 
 Kolejka priorytetowa to bardzo ważna struktura danych szczególnie w przypadku wszelkiego rodzaju aplikacji serwerowych.
 Przed przystąpieniem do rozwiazania problemu warto przyjrzeć się [bibliotece standardowej](https://golang.org/pkg/),
