@@ -3,7 +3,7 @@ category = ["przykłady"]
 date = "2016-07-10T20:12:00+02:00"
 tags = ["struktury danych", "golang", "biblioteka standardowa"]
 title = "Kolejka Priorytetowa"
-description = "Implementacja kolejki priorytetowej przy pomocy bibliteki standardowej na przykładzie kolejki poleceń"
+description = "Implementacja kolejki priorytetowej przy pomocy biblioteki standardowej na przykładzie kolejki poleceń"
 +++
 
 ## Wstęp
