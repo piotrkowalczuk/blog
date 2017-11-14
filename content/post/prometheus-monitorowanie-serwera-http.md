@@ -10,22 +10,22 @@ description = "Monitorowanie Serwera HTTP"
 [Prometheus](https://prometheus.io) jest to ekosystem do monitorowania napisany przez programistów z [SoundCloud](https://soundcloud.com). 
 Jak możecie się przekonać przeglądając oficjalne konto na [githubie](https://github.com/prometheus), większość środowiska jest napisana w [Go](http://golang.org).
 Od 2016 roku projekt jest też częścią [Cloud Native Computing Foundation](https://www.cncf.io) obok takich rozwiązań jak [kubernetes](https://kubernetes.io), [gRPC](http://grpc.io) czy [OpenTracing](http://opentracing.io).
-Daje nam pewność że projekt będzie rozwijany długie lata, będzie ewoluował razem z resztą środowiska, a także wsparcie dla __Go__ będzie stało na najwyższym poziomie.
+Daje nam to pewność, że projekt będzie rozwijany przez długie lata, będzie ewoluował razem z resztą środowiska, a także wsparcie dla __Go__ będzie stało na najwyższym poziomie.
 
-Skupie się tutaj na ostatnie wersji oznaczonej tagiem `v0.8.0`. 
+Skupię się tutaj na ostatniej wersji, oznaczonej tagiem `v0.8.0`. 
 W tej wersji wiele funkcji zostało oznaczonych jako `DEPRECATED` i zostaną one przeze mnie pominięte.
 Zalecana wersja Go to 1.9+.
 
 ## Biblioteka
 
-Zasadniczo __Prometheus__ jako serwer centralny musi być swiadomy istnienia aplikacji która jest monitorowana. 
+Zasadniczo __Prometheus__ jako serwer centralny musi być świadomy istnienia aplikacji która jest monitorowana. 
 Tylko wtedy jest on w stanie pobrać metryki ze wskazanego endpointu.
-Z pomocą przychodzi nam biblioteka [promhttp](https://godoc.org/github.com/prometheus/client_golang/prometheus/promhttp) która jest częścią składową oficjalnej [paczki](https://github.com/prometheus/client_golang/tree/master/prometheus). 
+Z pomocą przychodzi nam biblioteka [promhttp](https://godoc.org/github.com/prometheus/client_golang/prometheus/promhttp), która jest częścią składową oficjalnej [paczki](https://github.com/prometheus/client_golang/tree/master/prometheus). 
 
 [promhttp.HandlerFor](https://godoc.org/github.com/prometheus/client_golang/prometheus/promhttp#HandlerFor) pozwala utworzyć endpoint dla danego [prometheus.Gatherer'a](https://godoc.org/github.com/prometheus/client_golang/prometheus#Gatherer). 
 Interfejs ten jest na przykład implementowany przez [prometheus.DefaultRegisterer](https://godoc.org/github.com/prometheus/client_golang/prometheus#pkg-variables).
 
-Ponadto biblioteka ta zawiera garść dekoratorów ktore pozwolą nam zbierać informacje na temat naszej aplikacji:
+Ponadto biblioteka ta zawiera garść dekoratorów które, pozwolą nam zbierać informacje na temat naszej aplikacji:
 
 * [promhttp.InstrumentHandlerCounter](https://godoc.org/github.com/prometheus/client_golang/prometheus/promhttp#InstrumentHandlerCounter) - całkowita liczba przetworzonych żądań
 * [promhttp.InstrumentHandlerDuration](https://godoc.org/github.com/prometheus/client_golang/prometheus/promhttp#InstrumentHandlerDuration) - czas trwania żądania
@@ -35,7 +35,7 @@ Ponadto biblioteka ta zawiera garść dekoratorów ktore pozwolą nam zbierać i
 
 ## Implementacja
 
-Jak widać żeby zacząc nie trzeba wiele się napracować, większość potrzebnych nam składników jest już dostępna.
+Jak widać, żeby zacząć nie trzeba się wiele napracować. Większość potrzebnych nam składników jest już dostępna.
 Brakujący element to [kolektory](https://godoc.org/github.com/prometheus/client_golang/prometheus#Collector) które musimy zainicjować własnoręcznie.
 
 ```go
@@ -59,8 +59,8 @@ requests := prometheus.NewCounterVec(
 )
 ```
 
-Oba one muszą zostać zarejestrowane a następnie przekazane jako argument do wyżej wymienionych dekoratorów.
-Możemy trochę usprawnić ten process poprzez wprowadzenie dodatkowej struktóry. 
+Oba one muszą zostać zarejestrowane, a następnie przekazane jako argument do wyżej wymienionych dekoratorów.
+Możemy trochę usprawnić ten proces poprzez wprowadzenie dodatkowej struktury. 
 
 ```go
 type decorator struct {
@@ -85,7 +85,7 @@ func (d *decorator) Collect(in chan<- prometheus.Metric) {
 }
 ```
 
-Dodatkowo możemy zredukować duplikacje kodu implementując dodatkową metodę.
+Dodatkowo, możemy zredukować duplikację kodu implementując dodatkową metodę.
 Jej zadaniem będzie dekorowanie danego handlera szeregiem funkcji.
 
 ```go
@@ -100,7 +100,7 @@ func (d *decorator) instrument(handler http.Handler) http.Handler {
 }
 ```
 
-Naszym ostatnim krokiem będzie połączenie tego ze sobą i udostępnienie metryk. 
+Naszym ostatnim krokiem będzie połączenie wszystkiego ze sobą i udostępnienie metryk. 
 
 ```go
 func main() {
@@ -128,12 +128,12 @@ func main() {
 Aplikacja przez nas napisana będzie nasłuchiwać na dwóch portach. 
 Pierwszy `8080`, zarezerowany dla aplikacji właściwej. 
 Drugi `8081`, na którym prometheus będzie miał dostęp do metryk.
-Chciałbym zwrócic uwagę że router został w drugim przypadku zastosowany nie bez powodu.
-Pozwoli on w przyszłości udostępnić na tym samym porcie healthcheck czy też endpointy [pprof](https://golang.org/pkg/net/http/pprof/).
+Chciałbym zwrócić uwagę, że router został w drugim przypadku zastosowany nie bez powodu.
+Pozwoli on w przyszłości udostępnić na tym samym porcie healthcheck, czy też endpointy [pprof](https://golang.org/pkg/net/http/pprof/).
 
 ## Weryfikacja
 
-Aby sprawdzić czy aplikacja zwraca poprawny wynik posłużymy się aplikacją powłoki systemowej `curl`.
+Aby sprawdzić, czy aplikacja zwraca poprawny wynik, posłużymy się aplikacją powłoki systemowej `curl`.
 
 ```
 $ curl http://localhost:8080
@@ -152,8 +152,8 @@ Monitoring działa bez zarzutu.
 
 ## Podsumowanie
 
-Aby utrzymać przejrzystość przykładów nie zawierają one wszystkich wspieranych metryk. 
-Podczas ich implementacji warto zapoznać się z dokumentacją dekoratora. 
+Aby utrzymać przejrzystość, przykłady nie zawierają wszystkich wspieranych metryk. 
+Podczas ich implementacji warto zapoznać się z dokumentacją dekoratorów. 
 Znajdują się tam informacje o wspieranych etykietach.
 
 Pełny kod źródłowy aplikacji można znaleźć [tutaj](https://github.com/piotrkowalczuk/blog/tree/master/examples/prometheus-monitorowanie-serwera-http).
