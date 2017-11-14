@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="pl">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>{{ .Title }} &middot; {{ .Site.Author.name }}</title>
+	<title>{{ .Title }} &middot; {{ .Description }}</title>
 	<meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
