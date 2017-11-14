@@ -133,7 +133,7 @@ Pozwoli on w przyszłości udostępnić na tym samym porcie healthcheck, czy te�
 
 ## Weryfikacja
 
-Aby sprawdzić, czy aplikacja zwraca poprawny wynik, posłużymy się aplikacją powłoki systemowej `curl`.
+Aby sprawdzić, czy nasze demo zwraca poprawny wynik, posłużymy się aplikacją powłoki systemowej `curl`.
 
 ```
 $ curl http://localhost:8080

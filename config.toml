@@ -1,5 +1,6 @@
 baseurl = "https://piotrkowalczuk.github.io/"
 title = "Piotr Kowalczuk Blog"
+description = ""
 theme = "ghostwriter"
 languageCode = "pl"
 copyright = "Piotr Kowalczuk"
