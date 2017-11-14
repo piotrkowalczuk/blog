@@ -69,7 +69,7 @@ type decorator struct {
 }
 ```
 
-Aby spełniać swoje zadanie, struktóra ta powinna implementować interfejs [prometheus.Collector](https://godoc.org/github.com/prometheus/client_golang/prometheus#Collector).
+Aby spełniać swoje zadanie, struktura ta powinna implementować interfejs [prometheus.Collector](https://godoc.org/github.com/prometheus/client_golang/prometheus#Collector).
 
 ```go
 // Describe implements prometheus Collector interface.
