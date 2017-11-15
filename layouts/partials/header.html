@@ -31,9 +31,7 @@
 <div id="wrapper">
 	<header class="site-header">
 		<div class="container">
-			<div class="site-title-wrapper"
-				 itemprop="author"
-                 itemtype="http://schema.org/Person">
+			<div class="site-title-wrapper">
 				{{ with .Site.Params.logo }}
 				<a class="site-logo" title="{{ .Title }}" href="{{ .Site.BaseURL }}">
 					<img src="{{ . }}" alt="{{ .Title }}" />
@@ -50,27 +48,27 @@
 				{{ end }}
 				<a class="button-square" href="{{ .Site.BaseURL }}index.xml"><i class="fa fa-rss"></i></a>
 				{{ with .Site.Params.twitter }}
-				<a class="button-square button-social hint--top" itemprop="sameAs" data-hint="Twitter" title="Twitter" href="{{ . }}">
+				<a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="{{ . }}">
 					<i class="fa fa-twitter"></i>
 				</a>
 				{{ end }}
 				{{ with .Site.Params.github }}
-				<a class="button-square button-social hint--top" itemprop="sameAs" data-hint="Github" title="Github" href="{{ . }}">
+				<a class="button-square button-social hint--top" data-hint="Github" title="Github" href="{{ . }}">
 					<i class="fa fa-github-alt"></i>
 				</a>
 				{{ end }}
 				{{ with .Site.Params.stackoverflow }}
-				<a class="button-square button-social hint--top" itemprop="sameAs" data-hint="Stack Overflow" title="Stack Overflow" href="{{ . }}">
+				<a class="button-square button-social hint--top" data-hint="Stack Overflow" title="Stack Overflow" href="{{ . }}">
 					<i class="fa fa-stack-overflow"></i>
 				</a>
 				{{ end }}
 				{{ with .Site.Params.linkedin }}
-				<a class="button-square button-social hint--top" itemprop="sameAs" data-hint="LinkedIn" title="LinkedIn" href="{{ . }}">
+				<a class="button-square button-social hint--top" data-hint="LinkedIn" title="LinkedIn" href="{{ . }}">
 					<i class="fa fa-linkedin"></i>
 				</a>
 				{{ end }}
 				{{ with .Site.Params.gplus }}
-				<a class="button-square button-social hint--top" itemprop="sameAs" data-hint="Google+" title="Google+" href="{{ . }}">
+				<a class="button-square button-social hint--top" data-hint="Google+" title="Google+" href="{{ . }}">
 					<i class="fa fa-google-plus"></i>
 				</a>
 				{{ end }}
