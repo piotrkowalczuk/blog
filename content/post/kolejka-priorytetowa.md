@@ -1,9 +1,17 @@
 +++
-category = ["przykłady"]
+category = ["tutorial"]
 date = "2016-07-10T20:12:00+02:00"
 tags = ["struktury danych", "golang", "biblioteka standardowa"]
+keywords = [
+    "struktury danych", "data structure", 
+    "golang", "go", 
+    "biblioteka standardowa", "standard library", 
+    "kolejka priorytetowa", "priority queue", 
+    "algorytm", "algorithm",
+]
 title = "Kolejka Priorytetowa"
 description = "Implementacja kolejki priorytetowej przy pomocy biblioteki standardowej na przykładzie kolejki poleceń"
+image = "img/binary-heap.png"
 +++
 
 ## Wstęp
@@ -37,6 +45,9 @@ Każde polecenie powinno być opisane przez:
 
 Biblioteka standardowa Go jest naprawdę bogata.
 Nie zabrakło także implementacji stosu (binarnego).
+
+![binary heap](/img/binary-heap.png#center)
+
 Paczka [heap](https://golang.org/pkg/container/heap/), bo o niej tutaj mowa dostarcza nam taki oto interface:
 
 ```go

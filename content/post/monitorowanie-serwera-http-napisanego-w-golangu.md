@@ -1,9 +1,10 @@
 +++
-category = ["news"]
+category = ["przykłady"]
 date = "2017-11-14T00:12:21+01:00"
-tags = ["golang","prometheus","monitoring"]
-title = "Prometheus"
-description = "Monitorowanie Serwera HTTP"
+lastmod = "2017-11-19T00:12:51+01:00"
+tags = ["golang","prometheus","monitoring", "instrumentacja"]
+title = "Monitorowanie serwera HTTP napisanego w Golangu"
+description = "Tutorial pokazujący jak zaimplementować instrumentację serwera HTTP przy pomocy Prometheus'a"
 +++
 
 ## Czym jest Prometheus?

@@ -1,9 +1,10 @@
 +++
-category = ["news"]
+category = ["opinie"]
 date = "2017-10-21T19:56:18+02:00"
-title = "W Poszukiwaniu Pracy"
-tags = ["golang", "praca"]
-description = "Rekrutacja na stanowisko developera Go z perspektywy osoby z \"wewnątrz\""
+lastmod = "2017-11-19T00:12:55+01:00"
+title = "W poszukiwaniu pracy jako programista Golang"
+tags = ["golang", "praca", "rekrutacja"]
+description = "Rekrutacja na stanowisko developera Golang z perspektywy osoby z \"wewnątrz\""
 +++
 
 ## Wstęp

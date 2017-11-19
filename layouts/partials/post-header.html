@@ -1,5 +1,23 @@
 <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ .Title }}</h1>
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="{{ .Permalink }}"/>
+    {{if .Params.image}}
+        <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="{{ .Site.BaseURL }}{{.Params.image}}">
+            {{ with (imageConfig ( printf "static/%s" $.Params.image )) }}
+                <meta itemprop="width" content="{{.Width}}">
+                <meta itemprop="height" content="{{.Height}}">
+            {{ end }}
+        </div>
+    {{end}}
+    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="{{ .Site.BaseURL }}img/pkb-logo.jpg">
+            <meta itemprop="width" content="400">
+            <meta itemprop="height" content="60">
+        </div>
+        <meta itemprop="name" content="Piotr Kowalczuk - Opensource Golang Development">
+    </div>
     {{ if .Description }}
         <p class="post-description" itemprop="description">{{ .Description }}</p>
     {{ end }}
@@ -11,5 +29,7 @@
                 <a href="{{ .Site.Author.profile }}" itemprop="url" rel="author">{{ .Site.Author.name }}</a>
             </span>
         </span>
+        <br/>
+        <span>Zmodyfikowany <time datetime="{{ .Lastmod.Format "2006-01-02" }}" itemprop="dateModified">{{ .Lastmod.Format "2006-01-02" }}</time></span>
     </p>
 </header>
