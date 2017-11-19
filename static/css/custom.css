@@ -15,8 +15,25 @@
     color: #fff;
 }
 
-img[src$='#center']
-{
+img[src$='#center'] {
     display: block;
     margin: 0.7rem auto;
+}
+
+.post-stub p {
+    clear: both;
+    padding-right:22px;
+    margin-bottom:0px;
+}
+
+.post-stub p:hover {
+    padding-right:10px;
+}
+
+.post-stub-date:before {
+    content: "";
+}
+
+.post-stub-date {
+    float: right;
 }
