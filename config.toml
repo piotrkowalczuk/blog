@@ -5,6 +5,7 @@ theme = "ghostwriter"
 languageCode = "pl"
 copyright = "Piotr Kowalczuk"
 googleAnalytics = "UA-50599199-4"
+defaultLayout = "blog"
 
 contentdir = "content"
 layoutdir = "layouts"
@@ -32,9 +33,9 @@ disqusShortname = "piotrkowalczuk"
     shareLinkedIn = true
 
 [Permalinks]
-    post = "/:year/:month/:day/:filename/"
+    blog = "/:section/:filename/"
 
 [[menu.main]]
     name = "Blog"
-    url = "/"
+    url = "/blog"
     weight = 1

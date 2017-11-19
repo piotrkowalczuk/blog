@@ -12,6 +12,7 @@ keywords = [
 title = "Kolejka Priorytetowa"
 description = "Implementacja kolejki priorytetowej przy pomocy biblioteki standardowej na przykładzie kolejki poleceń"
 image = "img/binary-heap.png"
+aliases = ["/2016/07/10/kolejka-priorytetowa/"]
 +++
 
 ## Wstęp
