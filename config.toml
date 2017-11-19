@@ -33,9 +33,9 @@ disqusShortname = "piotrkowalczuk"
     shareLinkedIn = true
 
 [Permalinks]
-    blog = "/:section/:filename/"
+    post = "/:section/:filename/"
 
 [[menu.main]]
     name = "Blog"
-    url = "/blog"
+    url = "/post"
     weight = 1

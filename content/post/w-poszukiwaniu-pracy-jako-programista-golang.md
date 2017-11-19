@@ -5,7 +5,10 @@ lastmod = "2017-11-19T00:12:55+01:00"
 title = "W poszukiwaniu pracy jako programista Golang"
 tags = ["golang", "praca", "rekrutacja"]
 description = "Rekrutacja na stanowisko developera Golang z perspektywy osoby z \"wewnątrz\""
-aliases = ["/2017/10/21/w-poszukiwaniu-pracy/"]
+aliases = [
+    "/2017/10/21/w-poszukiwaniu-pracy/",
+    "/blog/w-poszukiwaniu-pracy-jako-programista-golang/"
+]
 +++
 
 ## Wstęp

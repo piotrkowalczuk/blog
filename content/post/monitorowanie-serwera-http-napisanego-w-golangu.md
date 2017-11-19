@@ -5,7 +5,10 @@ lastmod = "2017-11-19T00:12:51+01:00"
 tags = ["golang","prometheus","monitoring", "instrumentacja"]
 title = "Monitorowanie serwera HTTP napisanego w Golangu"
 description = "Tutorial pokazujący jak zaimplementować instrumentację serwera HTTP przy pomocy Prometheus'a"
-aliases = ["/2017/11/14/prometheus-monitorowanie-serwera-http/"]
+aliases = [
+    "/2017/11/14/prometheus-monitorowanie-serwera-http/",
+    "/blog/monitorowanie-serwera-http-napisanego-w-golangu/"
+]
 +++
 
 ## Czym jest Prometheus?
