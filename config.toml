@@ -24,7 +24,7 @@ disqusShortname = "piotrkowalczuk"
 [Params]
     intro = true
     headline = "Clear is better than clever"
-    description = "Golang Development"
+    description = "Osobiste wynurzenia na temat golanga, mikroserwisów, monitorowania aplikacji oraz IT jako takiego."
     github = "https://github.com/piotrkowalczuk"
     linkedin = "https://linkedin.com/in/piotr-kowalczuk-8a870480/"
     stackoverflow = "https://stackoverflow.com/users/1315205/piotr-kowalczuk"
