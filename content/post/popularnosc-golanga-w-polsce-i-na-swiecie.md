@@ -1,7 +1,7 @@
 +++
 title = "Popularność Golanga W Polsce I Na Świecie"
 description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych dobrze zakorzenionych na rynku."
-date = 2017-11-22T20:16:38+01:00
+date = 2017-12-17T20:13:22+01:00
 draft = false
 +++
 
