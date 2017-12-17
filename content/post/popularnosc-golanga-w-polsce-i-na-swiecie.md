@@ -1,8 +1,13 @@
 +++
-title = "Popularność Golanga W Polsce I Na Świecie"
-description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych dobrze zakorzenionych na rynku."
-date = 2017-12-17T20:13:22+01:00
+title = "Popularność Golanga w Polsce i na świecie"
+description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych ugruntowaną pozycją na rynku"
+date = 2017-12-17T13:22:00+01:00
 draft = false
+tags = ["golang", "haskell", "scala", "kotlin", "praca", "google"]
+keywords = [
+    "golang", "go", "trends", "popularność", "trendy", "praca"
+]
+image = "img/popularnosc/whoishiring_go_30_eu.png"
 +++
 
 Na temat obecnej sytuacji Golanga pisałem już pokrótce [tutaj]({{< ref "post/w-poszukiwaniu-pracy-jako-programista-golang.md" >}}). 
