@@ -1,4 +1,0 @@
-+++
-tags = ["golang"]
-category = ["news"]
-+++

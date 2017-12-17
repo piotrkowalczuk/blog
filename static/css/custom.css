@@ -20,6 +20,12 @@ img[src$='#center'] {
     margin: 0.7rem auto;
 }
 
+img {
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 2px 0px, rgba(0, 0, 0, 0.24) 0px 2px 2px 0px;
+    border: 0.5rem solid white;
+}
+
 .post-stub p {
     clear: both;
     padding-right:22px;

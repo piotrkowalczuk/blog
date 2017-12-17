@@ -1,4 +1,4 @@
-baseurl = "https://piotrkowalczuk.github.io/"
+baseurl = "https://gofunc.pl/"
 title = "Piotr Kowalczuk Blog"
 description = ""
 theme = "ghostwriter"
@@ -16,7 +16,7 @@ disqusShortname = "piotrkowalczuk"
 
 [Author]
     name = "Piotr Kowalczuk"
-    profile = "https://piotrkowalczuk.github.io"
+    profile = "https://gofunc.pl"
 
 [Taxonomies]
     tag = "tags"
