@@ -1,6 +1,6 @@
 +++
 title = "Popularność Golanga w Polsce i na świecie"
-description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych ugruntowaną pozycją na rynku"
+description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych z ugruntowaną pozycją na rynku"
 date = 2017-12-17T13:22:00+01:00
 draft = false
 tags = ["golang", "haskell", "scala", "kotlin", "praca", "google"]
@@ -28,7 +28,7 @@ Stack Overflow Driven Development (SODD) - jest to mało chwalebna, jednak bardz
 Jest ona prosta jak budowa cepa. 
 Kiedy tylko napotykamy jakąś trudność, lecimy z nią prosto do wujka Google, aby ten za nas znalazł nam odpowiedz na nurtujące nas pytanie w internecie (odpowiedź często znajduje się na [stacku](https://stackoverflow.com)).
 
-Idąc tym tropem, możemy stwierdzić, że ilość zapytań w Google może zależeć od ilości deweloperów korzystajacych z języka.
+Idąc tym tropem, możemy stwierdzić, że ilość zapytań w Google może zależeć od ilości deweloperów korzystających z języka.
 
 Przyjrzyjmy się, jak to wygląda dla różnych ujęć czasowych oraz regionów. 
 
@@ -49,7 +49,7 @@ Przewaga Scali w pierwszych latach jest znacząca, jednak potem zrównuje się o
 #### Polska
 
 W tym samym czasie w Polsce przewaga popularności Scali jest bezapelacyjna. 
-Praktyczie przez cały okres jest ona liderem. 
+Praktycznie przez cały okres jest ona liderem. 
 Nie ulega jednak wątpliwości, że niska liczba próbek zmniejsza miarodajność tego źródła.
 
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1243_RC11/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/09gbxjr","geo":"PL","time":"2012-12-13 2017-12-13"},{"keyword":"/m/091hdj","geo":"PL","time":"2012-12-13 2017-12-13"},{"keyword":"/m/03j_q","geo":"PL","time":"2012-12-13 2017-12-13"},{"keyword":"/m/0_lcrx4","geo":"PL","time":"2012-12-13 2017-12-13"}],"category":31,"property":""}, {"exploreQuery":"cat=31&date=2012-12-13 2017-12-13,2012-12-13 2017-12-13,2012-12-13 2017-12-13,2012-12-13 2017-12-13&geo=PL&q=%2Fm%2F09gbxjr,%2Fm%2F091hdj,%2Fm%2F03j_q,%2Fm%2F0_lcrx4","guestPath":"https://trends.google.pl:443/trends/embed/"}); </script>
