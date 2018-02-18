@@ -334,4 +334,8 @@ Jest jednak jeszcze trochę miejsca na ulepszenia. Wspólna funkcja `assertError
 
 W kolejnym kroku polecam zapoznać się ze świetnym wpisem [Error handling in Upspin](https://commandcenter.blogspot.de/2017/12/error-handling-in-upspin.html). Rob Pike przedstawia tam dość nowatorskie jak na standardy Go podejście do obsługi błędów.
 
+Pełen kod źródłowy do wglądu [tutaj](https://github.com/piotrkowalczuk/blog/tree/master/examples/testy-jednostkowe-w-golangu).
+
+
+
 
