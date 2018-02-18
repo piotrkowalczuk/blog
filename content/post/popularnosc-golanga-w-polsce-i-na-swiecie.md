@@ -2,6 +2,7 @@
 title = "Popularność Golanga w Polsce i na świecie"
 description = "Krótka analiza popularności Go w porównaniu do innych języków wschodzących jak i tych z ugruntowaną pozycją na rynku"
 date = 2017-12-17T13:22:00+01:00
+lastmod = "2018-02-18T20:53:00+01:00"
 draft = false
 tags = ["golang", "haskell", "scala", "kotlin", "praca", "google"]
 keywords = [
@@ -59,7 +60,7 @@ Nie ulega jednak wątpliwości, że niska liczba próbek zmniejsza miarodajnoś�
 #### Chiny 
 
 O popularności Go w Chinach słyszałem już wcześniej. 
-Google Trends zdaje się potwierdzać te informacje, jednak ze względu na [GFW](https://en.wikipedia.org/wiki/Great_Firewall) głębsza interpretacja tych danym zdaje się być bezcelowa.
+Google Trends zdaje się potwierdzać te informacje, jednak ze względu na [GFW](https://en.wikipedia.org/wiki/Great_Firewall) głębsza interpretacja tych danym zdaje się bezcelowa.
  
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1243_RC11/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/09gbxjr","geo":"CN","time":"2012-12-17 2017-12-17"},{"keyword":"/m/091hdj","geo":"CN","time":"2012-12-17 2017-12-17"},{"keyword":"/m/03j_q","geo":"CN","time":"2012-12-17 2017-12-17"},{"keyword":"/m/0_lcrx4","geo":"CN","time":"2012-12-17 2017-12-17"}],"category":31,"property":""}, {"exploreQuery":"cat=31&date=2012-12-17 2017-12-17,2012-12-17 2017-12-17,2012-12-17 2017-12-17,2012-12-17 2017-12-17&geo=CN&q=%2Fm%2F09gbxjr,%2Fm%2F091hdj,%2Fm%2F03j_q,%2Fm%2F0_lcrx4","guestPath":"https://trends.google.pl:443/trends/embed/"}); </script> 
 
@@ -71,7 +72,7 @@ Google Trends zdaje się potwierdzać te informacje, jednak ze względu na [GFW]
 #### USA
 
 Rynek amerykański nie zaskakuje. 
-Go stanowi niewielki ułamek zainteresowania jakim cieszą się Java, PHP czy C++.
+Go stanowi niewielki ułamek zainteresowania, jakim cieszą się Java, PHP czy C++.
 Sytuacja wygląda analogicznie dla rynków w Wielkiej Brytani, Niemczech czy Japonii.
 
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1243_RC11/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/09gbxjr","geo":"US","time":"2016-12-13 2017-12-13"},{"keyword":"/m/07sbkfb","geo":"US","time":"2016-12-13 2017-12-13"},{"keyword":"/m/060kv","geo":"US","time":"2016-12-13 2017-12-13"},{"keyword":"/m/0jgqg","geo":"US","time":"2016-12-13 2017-12-13"}],"category":31,"property":""}, {"exploreQuery":"cat=31&geo=US&q=%2Fm%2F09gbxjr,%2Fm%2F07sbkfb,%2Fm%2F060kv,%2Fm%2F0jgqg&date=2016-12-13 2017-12-13,2016-12-13 2017-12-13,2016-12-13 2017-12-13,2016-12-13 2017-12-13","guestPath":"https://trends.google.pl:443/trends/embed/"}); </script> 
