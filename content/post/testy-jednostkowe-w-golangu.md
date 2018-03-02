@@ -1,19 +1,26 @@
 +++
 category = ["tutorial"]
 title = "Testy jednostkowe w Golangu"
-description = "Testowanie przykładowej aplikacji internetowej w sposób czytelny i ustandaryzowany."
+description = "Testowanie przykładowej aplikacji internetowej napisanej w języku Go, w sposób czytelny i ustandaryzowany."
 date = 2018-02-18T20:11:00+01:00
 draft = false
 tags = ["golang", "mock", "stub", "test", "unit"]
 keywords = [
-	"golang", "mock", "stub", "test", "unit", "mockery"
+	"golang", "mock", "stub", "test", "unit", "mockery", "testowanie", "go"
 ]
 +++
 
 ## Wstęp
-Testowanie jednostkowe to jedna z podstawowych technik weryfikowania poprawnego działania programu. Nie oznacza to jednak, że temat jest prosty. Szczególnie w przypadku  __Go__, gdzie biblioteka [testing](https://golang.org/pkg/testing/), mimo iż potężna, nie narzuca jednego właściwego podejścia do tematu. Daje to nam dużą swobodę, ale nie za darmo. W przypadku większych zespołów ta swoboda może być problemem. Warto się wtedy zastanowić nad ustandaryzowaniem swojego podejścia.
+Testowanie jednostkowe to jedna z podstawowych technik weryfikowania poprawnego działania programu. 
+Nie oznacza to jednak, że temat jest prosty. 
+Szczególnie w przypadku  __Go__, gdzie biblioteka [testing](https://golang.org/pkg/testing/), mimo iż potężna, nie narzuca jednego właściwego podejścia do tematu. 
+Daje to nam dużą swobodę, ale nie za darmo. 
+W przypadku większych zespołów ta swoboda może być problemem. 
+Warto się wtedy zastanowić nad ustandaryzowaniem swojego podejścia.
 
-Chciałbym się podzielić z wami moim sposobem pisania nieco bardziej złożonych testów jednostkowych. Nie będzie to nic wyrafinowanego. Celem nadrzędnym jest, aby po spotkaniu z nieznanym do tej pory kodem, interpretowanie oraz rozszerzanie testów było proste.
+Chciałbym się podzielić z wami moim sposobem pisania nieco bardziej złożonych testów jednostkowych. 
+Nie będzie to nic wyrafinowanego. 
+Celem nadrzędnym jest, aby po spotkaniu z nieznanym do tej pory kodem, interpretowanie oraz rozszerzanie testów było proste.
 
 ## Problem
 Przyjmijmy, że mamy do przetestowania kontroler naszego web serwisu. 
@@ -29,7 +36,8 @@ type controller interface {
 ```
 
 Taka abstrakcja pozwala nam, odseparować warstwę biznesową od transportowej.
-Ktoś mógłby zwrócić uwagę, że przez użycie `http.Request` jest to niemożliwe. Aby nie komplikować naszego przykładu aż zanadto, musimy zaakceptować to niewielkie niedociągnięcie.
+Ktoś mógłby zwrócić uwagę, że przez użycie `http.Request` jest to niemożliwe. 
+Aby nie komplikować naszego przykładu aż zanadto, musimy zaakceptować to niewielkie niedociągnięcie.
 
 Na tapetę weźmiemy kontroler dodawania oraz modyfikowania samochodów, którego uproszczona implementacja mogłaby wyglądać następująco:
 
@@ -66,10 +74,13 @@ func (pcc *PutCarController) Handle(req *http.Request) (interface{}, error) {
 }
 ```
 
-Jest ona pozbawiona wszelkiego rodzaju ozdobników. Nawet walidacja żądania jest uproszczona. To, co sprawi najwięcej problemu podczas testowania tego kawałka kodu to przygotowanie [atrapy](https://pl.wikipedia.org/wiki/Atrapa_obiektu) bazy danych.
+Jest ona pozbawiona wszelkiego rodzaju ozdobników. 
+Nawet walidacja żądania jest uproszczona. 
+To, co sprawi najwięcej problemu podczas testowania tego kawałka kodu to przygotowanie [atrapy](https://pl.wikipedia.org/wiki/Atrapa_obiektu) bazy danych.
  
 ### Baza danych
-Jaka jest to baza danych, nie ma dla nas żadnego znaczenia. Chociaż nie ukrywam, że planując jej interfejs, wzorowałem się na [Google Datastore](https://cloud.google.com/datastore/docs/concepts/overview). Oto on:
+Jaka jest to baza danych, nie ma dla nas żadnego znaczenia. Chociaż nie ukrywam, że planując jej interfejs, wzorowałem się na [Google Datastore](https://cloud.google.com/datastore/docs/concepts/overview). 
+Oto on:
 
 ```go
 package example 
@@ -85,7 +96,9 @@ type Storage interface {
 `Get` nie jest nam do niczego potrzebny, jest tutaj jedynie, aby nadać sensu kolejnej sekcji ;)
 
 ## Stub czy mock?
-Nasz przypadek jest bardzo uproszczony. Użycie stuba wydaje się (i słusznie) uzasadnione. Oto jak taki stub mógłby wyglądać:
+Nasz przypadek jest bardzo uproszczony. 
+Użycie stuba wydaje się (i słusznie) uzasadnione. 
+Oto jak taki stub mógłby wyglądać:
 
 ```go
 type testStorage struct {
@@ -119,7 +132,8 @@ Możemy ten proces zautomatyzować, dodając do naszego kodu:
 Dzięki temu, przy każdorazowym wywołaniu komendy `go generate`, wszystkie atrapy zostaną wygenerowane automatycznie.
 
 ## Scenariusz
-Nasz test powinien pokrywać możliwie dużo pozytywnych, jak i negatywnych przypadków. Powinny być one, od siebie całkowicie odseparowane (nie mogą dzielić stanu). Dodawanie nowych przypadków powinno być proste i nie narażać już istniejących na modyfikacje. 
+Nasz test powinien pokrywać możliwie dużo pozytywnych, jak i negatywnych przypadków. 
+Powinny być one, od siebie całkowicie odseparowane (nie mogą dzielić stanu). Dodawanie nowych przypadków powinno być proste i nie narażać już istniejących na modyfikacje. 
 
 ### Table Driven Testing
 Jest to powszechnie stosowany wzorzec, polegający na grupowaniu różnych przypadków w jednym teście i iterowaniu po nich. Przeciwieństwem jest tworzenie osobnego testu dla każdego przypadku z osobna:
