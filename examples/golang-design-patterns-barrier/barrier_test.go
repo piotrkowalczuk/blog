@@ -4,9 +4,8 @@ import (
 	"testing"
 
 	"github.com/piotrkowalczuk/blog/examples/golang-design-patterns-barrier/barriercas"
+	"github.com/piotrkowalczuk/blog/examples/golang-design-patterns-barrier/barriercsp"
 	"github.com/piotrkowalczuk/blog/examples/golang-design-patterns-barrier/barriermonitor"
-
-	"github.com/piotrkowalczuk/blog/examples/golang-design-patterns-barrier/barrierchannel"
 )
 
 func TestBarrier(t *testing.T) {
@@ -17,8 +16,8 @@ func TestBarrier(t *testing.T) {
 				return bar.Await
 			}
 		},
-		"channel": func(i int) func() func() {
-			bar := barrierchannel.NewBarrier(i)
+		"csp": func(i int) func() func() {
+			bar := barriercsp.NewBarrier(i)
 			return func() func() {
 				return func() {
 					<-bar.Await()

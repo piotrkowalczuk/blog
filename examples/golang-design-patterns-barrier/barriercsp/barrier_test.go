@@ -1,4 +1,4 @@
-package barrierchannel
+package barriercsp
 
 import (
 	"testing"
