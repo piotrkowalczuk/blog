@@ -1,0 +1,79 @@
+@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+
+participant coordinate as C
+participant barrier as B << (S,#FF0000) Barrier >>
+participant goroutine1 as G1 << (F,#ADD1B2) process >>
+participant goroutine2 as G2 << (F,#ADD1B2) process >>
+participant goroutine3 as G3 << (F,#ADD1B2) process >>
+
+create C
+activate C
+
+== Initialization ==
+create B
+C -> B : bar := NewBarrier(3)
+activate B
+
+create G1
+C -> G1: go process(bar)
+activate G1
+
+create G2
+C -> G2 : go process(bar)
+activate G2
+
+create G3
+C -> G3: go process(bar)
+activate G3
+
+== Business Logic #1==
+
+rnote over G1: processing
+rnote over G2: processing
+rnote over G3: processing
+
+deactivate C
+hnote over C: idle
+
+== Synchronization ==
+
+G1 -> B: <-bar.Await()
+deactivate G1
+hnote over G1: idle
+
+G2 -> B: <-bar.Await()
+deactivate G2
+hnote over G2: idle
+
+G3 -> B: <-bar.Await()
+deactivate G3
+hnote over G3: idle
+
+B --> G1: <-bar.Await()
+activate G1
+B --> G2: <-bar.Await()
+activate G2
+B --> G3: <-bar.Await()
+
+== Business Logic #2==
+
+rnote over G1: processing
+rnote over G2: processing
+rnote over G3: processing
+
+activate G3
+destroy B
+
+== Gathering Results ==
+G1 --> C: result
+destroy G1
+activate C
+G2 --> C: result
+destroy G2
+G3 --> C: result
+destroy G3
+destroy C
+
+@enduml
