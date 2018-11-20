@@ -14,81 +14,90 @@ type barrierChannel interface {
 	Await() <-chan struct{}
 }
 
-func BenchmarkBarrier(b *testing.B, max int, fn func(int) interface{}) {
-	for i := 4; i < max; i = i << 1 {
-		b.Run(fmt.Sprintf("%d", i), func(b *testing.B) {
-			b.ReportAllocs()
+func BenchmarkBarrier(b *testing.B, benchmarkConstructor bool, numberOfGoroutines, numberOfUsages int, fn func(int) interface{}) {
+	for i := 4; i < numberOfGoroutines; i = i << 2 {
+		for j := 1; j < numberOfUsages; j = j << 1 {
+			b.Run(fmt.Sprintf("%d-%d", i, j), func(b *testing.B) {
+				b.ReportAllocs()
 
-			for n := 0; n < b.N; n++ {
-				bar := fn(i)
-				b.StopTimer()
-				var wg sync.WaitGroup
-				wg.Add(i)
-				var cl func()
-				switch bat := bar.(type) {
-				case barrierChannel:
-					cl = func() {
-						<-bat.Await()
-						wg.Done()
+				for n := 0; n < b.N; n++ {
+					var bar interface{}
+					if benchmarkConstructor {
+						bar = fn(i)
+						b.StopTimer()
+					} else {
+						b.StopTimer()
+						bar = fn(i)
 					}
-				case barrier:
-					cl = func() {
-						bat.Await()
-						wg.Done()
+					var wg sync.WaitGroup
+					var closure func()
+					switch bat := bar.(type) {
+					case barrierChannel:
+						closure = func() {
+							<-bat.Await()
+							wg.Done()
+						}
+					case barrier:
+						closure = func() {
+							bat.Await()
+							wg.Done()
+						}
+					default:
+						b.Fatal("unknown barrier interface")
 					}
-				default:
-					b.Fatal("unknown barrier interface")
-				}
-				b.StartTimer()
+					b.StartTimer()
 
-				for j := 0; j < i; j++ {
-					go cl()
-				}
+					// To enforce barrier re-usage.
+					for m := 0; m < j; m++ {
+						b.StopTimer()
+						wg.Add(i)
+						b.StartTimer()
 
-				b.StopTimer()
-				wg.Wait()
-				b.StartTimer()
-			}
-		})
+						for g := 0; g < i; g++ {
+							go closure()
+						}
+
+						b.StopTimer()
+						wg.Wait()
+						b.StartTimer()
+					}
+				}
+			})
+		}
 	}
 }
 
-func BenchmarkBarrierAwait(b *testing.B, max int, fn func(int) interface{}) {
-	for i := 4; i < max; i = i << 1 {
-		b.Run(fmt.Sprintf("%d", i), func(b *testing.B) {
-			b.ReportAllocs()
+func TestBarrier(t *testing.T, fn func(i int) func() func()) {
+	for size := 1; size < 101; size++ {
+		for concurrency := 1; concurrency < 102; concurrency++ {
+			t.Run(fmt.Sprintf("%d-%d", size, concurrency), func(t *testing.T) {
+				t.Parallel()
 
-			for n := 0; n < b.N; n++ {
-				b.StopTimer()
-				bar := fn(i)
-				var wg sync.WaitGroup
-				wg.Add(i)
-				var closure func()
-				switch bat := bar.(type) {
-				case barrierChannel:
-					closure = func() {
-						<-bat.Await()
-						wg.Done()
+				wait := fn(size)
+
+				for j := 0; j < concurrency; j++ {
+					in := make(chan int, size)
+					for i := 0; i < cap(in); i++ {
+						go func(i int) {
+							in <- 1
+							wait()()
+							in <- 2
+						}(i)
 					}
-				case barrier:
-					closure = func() {
-						bat.Await()
-						wg.Done()
+
+					for i := 0; i < cap(in); i++ {
+						if got := <-in; got != 1 {
+							t.Errorf("wrong number, expected 1 but got %d", got)
+						}
 					}
-				default:
-					b.Fatal("unknown barrier interface")
-				}
-				b.StartTimer()
-				// PREPARATION DONE
 
-				for j := 0; j < i; j++ {
-					go closure()
+					for i := 0; i < cap(in); i++ {
+						if got := <-in; got != 2 {
+							t.Errorf("wrong number, expected 1 but got %d", got)
+						}
+					}
 				}
-
-				b.StopTimer()
-				wg.Wait()
-				b.StartTimer()
-			}
-		})
+			})
+		}
 	}
 }

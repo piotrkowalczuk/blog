@@ -23,6 +23,10 @@ func NewBarrier(i int) *Barrier {
 }
 
 func (b *Barrier) Await() {
+	if b.concurrency < 2 {
+		return
+	}
+
 	i := atomic.LoadUint64(&b.iteration)
 
 	if atomic.AddUint64(&b.waiting[i%2], ^uint64(0)) == 0 {
